@@ -4,6 +4,7 @@ import './App.css';
 
 import BookAction from "./BookAction";
 import BookStore from "./BookStore";
+import {BookList} from "./BookList";
 
 class App extends Component {
   constructor(){
@@ -37,7 +38,7 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        {this.state.books.map(b => <p key={b.title}>{b.title}</p>)}
+        <BookList books={this.state.books} />
       </div>
     );
   }
