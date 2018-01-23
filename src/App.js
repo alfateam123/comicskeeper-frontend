@@ -6,7 +6,6 @@ import BookAction from "./BookAction";
 import BookStore from "./BookStore";
 
 class App extends Component {
-
   constructor(){
     super();
     this.state = {books: []}
@@ -16,17 +15,19 @@ class App extends Component {
     console.log("didComponentMount was called!");
     BookStore.addListener(this.setBooks);
 
-
     BookAction.retrieveBooksList();
   }
 
   setBooks = () => {
-    this.setState({
-      books: BookStore.books
-    });
+    console.log(">>>", BookStore.books);
+    if(BookStore.books !== undefined){
+      this.setState({
+        books: BookStore.books
+      });
+    }
   };
 
-  render() {
+  render = () => {
     return (
       <div className="App">
         <header className="App-header">
