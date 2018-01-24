@@ -1,0 +1,26 @@
+.book-list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+.book-item {
+  height: 300px;
+  max-width: 33vw;
+  margin-bottom: 1vh;
+
+  /* black low opacity */
+  border: 1px solid #0000004d;
+
+  /* put text at the end */
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.book-description {
+  border-top: 1px solid black;
+  font-weight: bolder;
+}
+.book-description span:hover {
+  color: darkblue;
+}
