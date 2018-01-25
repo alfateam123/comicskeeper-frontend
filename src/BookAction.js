@@ -14,10 +14,17 @@ class BookActionStatic {
     });
   }
 
-  filterBySeries(series_name){
+  filterBySeries(series_name) {
     appDispatcher.dispatch({
       actionType: "FILTER_BY_SERIES",
       seriesName: series_name
+    });
+  }
+
+  removeFilter() {
+    appDispatcher.dispatch({
+      actionType: "FILTER_BY_SERIES",
+      seriesName: null
     });
   }
 };
