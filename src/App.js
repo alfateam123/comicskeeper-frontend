@@ -16,7 +16,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log("didComponentMount was called!");
     BookStore.addListener(this.setBooks);
 
     BookAction.retrieveBooksList();
@@ -24,7 +23,6 @@ class App extends Component {
 
   setBooks = () => {
     const books = BookStore.getBooks();
-    console.log(">>>", books);
     if(books !== undefined){
       this.setState({
         books: books,

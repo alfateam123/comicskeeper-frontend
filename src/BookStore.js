@@ -20,12 +20,10 @@ class BooksStoreStatic extends FluxUtils.Store {
 	__onDispatch(data) {
 		switch(data.actionType) {
 			case "BOOK_RETRIEVED":
-				console.log(">>>", data);
 				this.books = data.books;
 		    this.__emitChange();
 				break;
 			case "FILTER_BY_SERIES":
-				console.log("filter by series", data);
 				if(this.filterSeries !== data.seriesName){
 					this.filterSeries = data.seriesName;
 					this.__emitChange();
