@@ -9,7 +9,10 @@ import {BookList} from "./BookList";
 class App extends Component {
   constructor(){
     super();
-    this.state = {books: []}
+    this.state = {
+      books: [],
+      currentFilteringPattern: null
+    }
   }
 
   componentDidMount() {
@@ -20,10 +23,12 @@ class App extends Component {
   }
 
   setBooks = () => {
-    console.log(">>>", BookStore.books);
-    if(BookStore.books !== undefined){
+    const books = BookStore.getBooks();
+    console.log(">>>", books);
+    if(books !== undefined){
       this.setState({
-        books: BookStore.books
+        books: books,
+        currentFilteringPattern: BookStore.filterSeries
       });
     }
   };
@@ -32,11 +37,12 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-			{/*<img src={logo} className="App-logo" alt="logo" />*/}
           <h1 className="App-title">Comics Keeper</h1>
         </header>
         <p className="App-intro">
-			{/*To get started, edit <code>src/App.js</code> and save to reload.*/}
+          {this.state.currentFilteringPattern?
+              <p>Filtering by: {`"${this.state.currentFilteringPattern}"`}</p>
+              :null}
         </p>
         <BookList books={this.state.books} />
       </div>
