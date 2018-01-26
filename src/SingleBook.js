@@ -7,11 +7,16 @@ export class SingleBook extends React.Component {
   }
 
   render() {
+    const volumeNumber = this.props.number === 0 ? "(unique)" : this.props.number;
     return <div className="book-item">
-      <p className="book-description">
+      <div className="book-description">
+        <img src={this.props.image} alt={this.props.series + " - " + volumeNumber} />
+      </div>
+      <div className="book-text-container">
         <span onClick={this.requestFilteringOnSeries}>
-            {this.props.series}</span> - {this.props.number === 0 ? "(unique)" : this.props.number}
-      </p>
+            {this.props.series}</span>
+        <span>- {volumeNumber}</span>
+      </div>
     </div>;
   }
 }

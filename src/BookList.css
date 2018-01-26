@@ -5,7 +5,7 @@
 }
 
 .book-item {
-  height: 300px;
+  /*height: 300px;*/
   max-width: 33vw;
   margin-bottom: 1vh;
 
@@ -14,13 +14,20 @@
 
   /* put text at the end */
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
+}
+
+.book-item img {
+  max-width: 33vw;
 }
 
 .book-description {
   border-top: 1px solid black;
+}
+
+.book-text-container{
   font-weight: bolder;
 }
-.book-description span:hover {
+.book-text-container span:hover {
   color: darkblue;
 }

@@ -10,6 +10,7 @@ export class BookList extends React.Component {
         title={b.title}
         series={b.series}
         number={b.volume_number}
+        image={b.image}
     />);
     return <div className="book-list">{singleBooks}</div>;
   }
