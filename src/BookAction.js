@@ -1,12 +1,12 @@
 import {appDispatcher} from "./AppDispatcher";
+import {URL} from "./Constants";
 import * as axios from "axios";
 
 class BookActionStatic {
   retrieveBooksList() {
     // TODO(winter): try to understand why it doesn't work under Firefox
     // on Chrome it works fine, hwat?!?
-    //axios.get("http://localhost:3500/books")
-    axios.get("http://192.168.1.55:3500/books")
+    axios.get(URL.retrieveBooks)
     .then((response) => {
       appDispatcher.dispatch({
         actionType: "BOOK_RETRIEVED",
