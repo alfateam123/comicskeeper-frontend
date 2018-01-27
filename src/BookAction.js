@@ -1,16 +1,18 @@
 import {appDispatcher} from "./AppDispatcher";
-import {URL} from "./Constants";
-import * as axios from "axios";
+import {URLConstant} from "./Constants";
+var jquery = require("jquery");
 
 class BookActionStatic {
   retrieveBooksList() {
-    // TODO(winter): try to understand why it doesn't work under Firefox
-    // on Chrome it works fine, hwat?!?
-    axios.get(URL.retrieveBooks)
-    .then((response) => {
+    jquery.getJSON(URLConstant.retrieveBooks, function(response) {
       appDispatcher.dispatch({
         actionType: "BOOK_RETRIEVED",
-        books: response.data
+        books: response
+      });
+    }).fail(function(error){
+      appDispatcher.dispatch({
+        actionType: "BOOK_RETRIEVE_ERROR",
+        books: []
       });
     });
   }

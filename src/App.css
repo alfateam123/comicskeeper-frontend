@@ -28,3 +28,7 @@
 .App-filtering-close:hover {
   color: red;
 }
+
+.App-books-error {
+  color: red;
+}

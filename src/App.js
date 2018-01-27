@@ -11,7 +11,8 @@ class App extends Component {
     super();
     this.state = {
       books: [],
-      currentFilteringPattern: null
+      currentFilteringPattern: null,
+      showError: false
     }
   }
 
@@ -26,7 +27,8 @@ class App extends Component {
     if(books !== undefined){
       this.setState({
         books: books,
-        currentFilteringPattern: BookStore.filterSeries
+        currentFilteringPattern: BookStore.filterSeries,
+        showError: BookStore.couldNotRetrieveBooks()
       });
     }
   };
@@ -55,6 +57,7 @@ class App extends Component {
         <div className="App-intro">
           {this.renderFilterHandler(this.state.currentFilteringPattern)}
         </div>
+        {this.state.showError?<p className="App-books-error">Error while retrieving books</p>:null}
         <BookList books={this.state.books} />
       </div>
     );

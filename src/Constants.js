@@ -1,5 +1,5 @@
-const BASE_URL = "http://192.168.1.55:3500";
+const BASE_URL = "/api";
 
-export const URL = {
+export const URLConstant = {
   retrieveBooks: `${BASE_URL}/books`
 }

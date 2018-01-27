@@ -6,6 +6,7 @@ class BooksStoreStatic extends FluxUtils.Store {
 		super(dispatcher);
 		this.books = [];
 		this.filterSeries = null;
+		this.error = false;
 	}
 
 	getBooks() {
@@ -17,11 +18,21 @@ class BooksStoreStatic extends FluxUtils.Store {
 		}
 	}
 
+	couldNotRetrieveBooks() {
+		return this.error === true;
+	}
+
 	__onDispatch(data) {
 		switch(data.actionType) {
 			case "BOOK_RETRIEVED":
 				this.books = data.books;
-		    this.__emitChange();
+				this.error = false;
+				this.__emitChange();
+				break;
+			case "BOOK_RETRIEVE_ERROR":
+				this.books = data.books;
+				this.error = true;
+				 this.__emitChange();
 				break;
 			case "FILTER_BY_SERIES":
 				if(this.filterSeries !== data.seriesName){
