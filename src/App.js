@@ -1,43 +1,64 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 
 import BookAction from "./BookAction";
 import BookStore from "./BookStore";
+import {BookList} from "./BookList";
 
 class App extends Component {
   constructor(){
     super();
-    this.state = {books: []}
+    this.state = {
+      books: [],
+      currentFilteringPattern: null,
+      showError: false
+    }
   }
 
   componentDidMount() {
-    console.log("didComponentMount was called!");
     BookStore.addListener(this.setBooks);
 
     BookAction.retrieveBooksList();
   }
 
   setBooks = () => {
-    console.log(">>>", BookStore.books);
-    if(BookStore.books !== undefined){
+    const books = BookStore.getBooks();
+    if(books !== undefined){
       this.setState({
-        books: BookStore.books
+        books: books,
+        currentFilteringPattern: BookStore.filterSeries,
+        showError: BookStore.couldNotRetrieveBooks()
       });
     }
   };
+
+  removeFilter(e) {
+    BookAction.removeFilter();
+  }
+
+  renderFilterHandler(filter_pattern) {
+    if(filter_pattern){
+      return <p>Filtering by: {`"${this.state.currentFilteringPattern}"`}
+          <span className="App-filtering-close" onClick={this.removeFilter}>{"\u2715"}</span>
+        </p>;
+    }
+    else {
+      return null;
+    }
+  }
 
   render = () => {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Comics Keeper</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        {this.state.books.map(b => <p key={b.title}>{b.title}</p>)}
+        <div className="App-intro">
+          {this.renderFilterHandler(this.state.currentFilteringPattern)}
+        </div>
+        {this.state.showError?<p className="App-books-error">Error while retrieving books</p>:null}
+        <BookList books={this.state.books} />
       </div>
     );
   }
