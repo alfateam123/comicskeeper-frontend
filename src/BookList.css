@@ -6,7 +6,7 @@
 
 .book-item {
   /*height: 300px;*/
-  max-width: 33vw;
+  max-width: 32vw;
   margin-bottom: 1vh;
 
   /* black low opacity */
@@ -18,7 +18,7 @@
 }
 
 .book-item img {
-  max-width: 33vw;
+  max-width: 32vw;
 }
 
 .book-description {
@@ -27,7 +27,19 @@
 
 .book-text-container{
   font-weight: bolder;
+  cursor: pointer;
 }
 .book-text-container span:hover {
+  color: darkblue;
+}
+
+.book-series {
+  border: 1px solid green;
+}
+.book-series-item {
+  font-weight: bolder;
+  cursor: pointer;
+}
+.book-series-item span:hover {
   color: darkblue;
 }
