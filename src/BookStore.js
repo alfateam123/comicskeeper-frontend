@@ -22,10 +22,22 @@ class BooksStoreStatic extends FluxUtils.Store {
 		return this.error === true;
 	}
 
+	getSeries() {
+		return this.series;
+	}
+
+	extractSeries(books) {
+		const unduped_series_set = new Set(books.map(b => b.series));
+		let unduped_series = [];
+		unduped_series_set.forEach(series_name => unduped_series.push(series_name));
+		return unduped_series.sort();
+	}
+
 	__onDispatch(data) {
 		switch(data.actionType) {
 			case "BOOK_RETRIEVED":
 				this.books = data.books;
+				this.series = this.extractSeries(data.books);
 				this.error = false;
 				this.__emitChange();
 				break;
