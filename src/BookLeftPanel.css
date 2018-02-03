@@ -1,0 +1,20 @@
+.book-series {
+  border-top: 5px solid black;
+  border-bottom: 5px solid black;
+  border-right: 5px solid black;
+  min-width: 15vw;
+  min-height: calc(100vh - 110px);
+}
+
+.book-series-item {
+  font-weight: bolder;
+  cursor: pointer;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border: 1px solid lightgrey;
+  min-height: 50px;
+}
+
+.book-series-item span:hover {
+  color: darkblue;
+}

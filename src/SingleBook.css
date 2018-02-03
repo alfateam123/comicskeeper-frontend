@@ -1,0 +1,39 @@
+.book-item {
+  /*height: 300px;*/
+  max-width: 25vw;
+  margin-bottom: 1vh;
+  height: fit-content;
+
+  /* black low opacity */
+  border: 1px solid #0000004d;
+
+  /* put text at the end */
+  display: flex;
+  flex-direction: column;
+}
+
+.book-item img {
+  max-width: 25vw;
+}
+
+@media screen and (orientation: landscape) and (max-width: 1000px) {
+  .book-item {
+    max-width: 32vw;
+  }
+
+  .book-item img {
+    max-width: 32vh;
+  }
+}
+
+.book-description {
+  border-top: 1px solid black;
+}
+
+.book-text-container{
+  font-weight: bolder;
+  cursor: pointer;
+}
+.book-text-container span:hover {
+  color: darkblue;
+}
