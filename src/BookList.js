@@ -10,6 +10,10 @@ export class BookList extends React.Component {
   requestFilteringOnSeries = (series_name) => (e) => {
     BookAction.filterBySeries(series_name);
   }
+  requestFilteringFromDropdown = (e) => {
+    const series_name = e.nativeEvent.target.value;
+    BookAction.filterBySeries(series_name);
+  }
 
   renderBooksList(books){
     if(!BookStore.filterSeries) return [];
@@ -28,12 +32,22 @@ export class BookList extends React.Component {
     </div>)
   }
 
+  renderSeriesDropdown(sorted_series){
+    return <select onChange={this.requestFilteringFromDropdown}>
+      <option disabled selected hidden value>Select a series</option>
+      {sorted_series.map(series => <option value={series}>{series}</option>)}
+    </select>;
+  }
+
   render(){
     const series = this.props.series || [];
     const books = this.props.books || [];
-    return <div className="book-container">
-      <div className="book-series">{this.renderSeries(series)}</div>
-      <div className="book-list">{this.renderBooksList(books)}</div>
-    </div>;
+    return [
+      <div className="book-dropdown">{this.renderSeriesDropdown(series)}</div>,
+      <div className="book-container">
+        <div className="book-series">{this.renderSeries(series)}</div>
+        <div className="book-list">{this.renderBooksList(books)}</div>
+      </div>
+    ]
   }
 }
