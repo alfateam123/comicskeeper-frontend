@@ -23,6 +23,7 @@ export class BookList extends React.Component {
         series={b.series}
         number={b.volume_number}
         image={b.image}
+        base64Placeholder={b.placeholder}
     />);
   }
 
