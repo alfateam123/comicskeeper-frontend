@@ -41,21 +41,25 @@ export class SingleBook extends React.Component {
     });
   }
 
+  renderImageOrPlaceholder(altText){
+      return (this.state.isFullImageLoaded?
+        <img src={this.props.image} alt={altText} />
+        :
+        <svg width={300} height={400} alt={altText}>
+          <rect width={300} height={400} style={{
+            fill: this.props.base64Placeholder
+          }} />
+        </svg>
+      )
+ }
+
   renderFullSizedBook() {
     const volumeNumber = this.props.number === 0 ? "(unique)" : this.props.number;
     const altText = this.props.series + " - " + volumeNumber;
     // request it now, we know that the user is (hopefully) on desktop right now
     this.downloadImage();
     return <div className="book-item">
-      <div className="book-description">
-      {this.state.isFullImageLoaded?
-        <img src={this.props.image} alt={altText} />
-        :
-        <img src={this.props.base64Placeholder}
-             width={300} height={400}
-             alt={altText} />
-      }
-      </div>
+      <div className="book-description">{this.renderImageOrPlaceholder(altText)}</div>
       <div className="book-text-container">
         <span onClick={this.requestFilteringOnSeries}>
             {this.props.series}</span>
@@ -72,12 +76,7 @@ export class SingleBook extends React.Component {
     return <div className="book-item">
         <div onClick={this.toggleImageVisibility}>{`${title} ${arrow}`}</div>
         {this.state.showImageInCompactMode?
-          (this.state.isFullImageLoaded?
-            <img src={this.props.image} alt={altText} />
-          :
-            <img src={this.props.base64Placeholder}
-                 width={300} height={400}
-                 alt={altText} />)
+          this.renderImageOrPlaceholder(altText)
         : null}
     </div>
   }
