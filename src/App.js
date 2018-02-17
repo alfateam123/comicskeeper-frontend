@@ -13,7 +13,8 @@ class App extends Component {
       books: [],
       showError: false,
       showSeriesTab: true,
-      series: []
+      series: [],
+      loadingBooks: true
     }
   }
 
@@ -30,7 +31,8 @@ class App extends Component {
         books: books,
         showError: BookStore.couldNotRetrieveBooks(),
         showSeriesTab: !BookStore.filterSeries,
-        series: BookStore.getSeries()
+        series: BookStore.getSeries(),
+        loadingBooks: false
       });
     }
   };
@@ -46,9 +48,12 @@ class App extends Component {
           <h1 className="App-title">Comics Keeper</h1>
         </header>
         {this.state.showError?<p className="App-books-error">Error while retrieving books</p>:null}
-        <BookList showSeries={this.state.showSeriesTab}
+        {this.state.loadingBooks?
+          <p>Loading...</p>
+        : <BookList showSeries={this.state.showSeriesTab}
                   series={this.state.series}
                   books={this.state.books} />
+        }
       </div>
     );
   }
