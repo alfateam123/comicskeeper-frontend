@@ -8,7 +8,8 @@ export class SingleBook extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isFullImageLoaded: false
+      isFullImageLoaded: false,
+      showImageInCompactMode: false
     };
   }
 
@@ -16,7 +17,19 @@ export class SingleBook extends React.Component {
     BookAction.filterBySeries(this.props.series);
   }
 
-  componentDidMount() {
+  toggleImageVisibility = (_) => {
+    if(this.state.showImageInCompactMode === false){
+        // the image will be shown when the method terminates
+        // so, download the real image now in background
+        this.downloadImage();
+    }
+    this.setState({
+      showImageInCompactMode: !this.state.showImageInCompactMode
+    });
+
+  }
+
+  downloadImage() {
     // show the image once it's fully downloaded.
     // there is a small base64 placeholder to fill the space
     let img = new Image(300, 400);
@@ -28,16 +41,19 @@ export class SingleBook extends React.Component {
     });
   }
 
-  render() {
+  renderFullSizedBook() {
     const volumeNumber = this.props.number === 0 ? "(unique)" : this.props.number;
+    const altText = this.props.series + " - " + volumeNumber;
+    // request it now, we know that the user is (hopefully) on desktop right now
+    this.downloadImage();
     return <div className="book-item">
       <div className="book-description">
       {this.state.isFullImageLoaded?
-        <img src={this.props.image} alt={this.props.series + " - " + volumeNumber} />
+        <img src={this.props.image} alt={altText} />
         :
         <img src={this.props.base64Placeholder}
              width={300} height={400}
-             alt={this.props.series + " - " + volumeNumber} />
+             alt={altText} />
       }
       </div>
       <div className="book-text-container">
@@ -46,5 +62,32 @@ export class SingleBook extends React.Component {
         <span>- {volumeNumber}</span>
       </div>
     </div>;
+  }
+
+  renderHidableBook = () => {
+    const volumeNumber = this.props.number === 0 ? "(unique)" : this.props.number;
+    const altText = this.props.series + " - " + volumeNumber;
+    const title = `${this.props.series} - ${volumeNumber}`;
+    const arrow = this.state.showImageInCompactMode?"▲":"▼";
+    return <div className="book-item">
+        <div onClick={this.toggleImageVisibility}>{`${title} ${arrow}`}</div>
+        {this.state.showImageInCompactMode?
+          (this.state.isFullImageLoaded?
+            <img src={this.props.image} alt={altText} />
+          :
+            <img src={this.props.base64Placeholder}
+                 width={300} height={400}
+                 alt={altText} />)
+        : null}
+    </div>
+  }
+
+  render() {
+    if(window.innerWidth < 1000) {
+      return this.renderHidableBook();
+    }
+    else {
+      return this.renderFullSizedBook();
+    }
   }
 }
